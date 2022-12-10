@@ -6,6 +6,7 @@ export const usePokemons = (offset: number, limit: number) => {
         offset,
         limit,
     });
+
     // return the data    
     return pokemons;
 };
