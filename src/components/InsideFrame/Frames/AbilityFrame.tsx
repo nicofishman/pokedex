@@ -42,13 +42,13 @@ const AbilityFrame: FC<AbilityFrameProps> = ({ability, setQueue}) => {
             <div className="flex md:mt-16 mt-5 flex-col md:flex-row gap-5 h-full overflow-y-auto scrollBar">
                 <div className="flex-1 flex flex-col gap-5 h-max">
                     <div className='flex-1 flex flex-col'>
-                        <h4 className="font-semibold w-full bg-neutral-700 text-white py-3 pl-2 mb-2">Descripción ({abilityEffectEntry?.language.name.toUpperCase()})</h4>
+                        <h4 className="font-semibold w-full bg-gradient text-white py-3 pl-2 mb-2">Descripción ({abilityEffectEntry?.language.name.toUpperCase()})</h4>
                         <p className="text-slate-900">{
                             abilityEffectEntry?.effect
                         }</p>
                     </div>
                     <div className='flex-1'>
-                        <h4 className="font-semibold w-full bg-neutral-700 text-white py-3 pl-2 mb-2">Pokemons</h4>
+                        <h4 className="font-semibold w-full bg-gradient text-white py-3 pl-2 mb-2">Pokemons</h4>
                         { pokemonsInside.data ? (
                             <div className='flex flex-wrap flex-1'>
                                 {
@@ -72,7 +72,7 @@ const AbilityFrame: FC<AbilityFrameProps> = ({ability, setQueue}) => {
                 </div>
                 <div className="flex-1 flex flex-col gap-5">
                     <div>
-                        <h4 className="font-semibold w-full bg-neutral-700 text-white py-3 pl-2 mb-2">Nombres</h4>
+                        <h4 className="font-semibold w-full bg-gradient text-white py-3 pl-2 mb-2">Nombres</h4>
                         <ul className='divide-y-[1px] divide-slate-700/40 '>
                             {ability.names.map((name, idx) => (
                                 <li key={idx} className="text-slate-700 p-2">

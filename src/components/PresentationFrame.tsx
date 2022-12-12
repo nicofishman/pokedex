@@ -15,6 +15,9 @@ const PresentationFrame: FC<PresentationFrameProps> = () => {
                 <span className="text-xl font-medium transition-transform group-hover:-translate-x-4">
                     Selecciona un pokemon para ver sus detalles
                 </span>
+                <h2 className="text-lg font-semibold mt-5 text-slate-700">
+                    También se puede navegar a las habilidades!
+                </h2>
             </div>
             <div className="mt-20">
                 <h2 className='font-semibold'>

@@ -58,7 +58,15 @@ export const pokedexRouter = router({
                     const res = await fetch(url);
                     const pokeRes = (await res.json()) as Pokemon;
 
-                    return pokeRes;
+                    return {
+                        abilities: pokeRes.abilities,
+                        sprites: pokeRes.sprites,
+                        name: pokeRes.name,
+                        id: pokeRes.id,
+                        types: pokeRes.types,
+                        stats: pokeRes.stats,
+                        height: pokeRes.height,
+                    } as Partial<Pokemon>;
                 })
             );
         }),

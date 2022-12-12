@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import PokemonList from '../components/PokemonList/PokemonList';
 import Frame from '../components/Frame';
 
-export type Selectable = Pokemon | Ability;
+export type Selectable = Pokemon | Ability | Partial<Pokemon>;
 
 const Home: NextPage = () => {
     const [queue, setQueue] = useState<(Selectable)[]>([]);
