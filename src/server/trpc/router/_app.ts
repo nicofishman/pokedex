@@ -1,11 +1,11 @@
-import { router } from "../trpc";
+import { router } from '../trpc';
 
-import { exampleRouter } from "./example";
-import { pokedexRouter } from "./pokedex";
+import { exampleRouter } from './example';
+import { pokedexRouter } from './pokedex';
 
 export const appRouter = router({
     example: exampleRouter,
-    pokedex: pokedexRouter
+    pokedex: pokedexRouter,
 });
 
 // export type definition of API

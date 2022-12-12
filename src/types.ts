@@ -3,9 +3,9 @@
 /**
  * The name and the URL of the referenced resource
  */
-export type NamedAPIResource = {
+export type NamedAPIResource<T extends string = string> = {
     /** The name of the referenced resource */
-    name: string;
+    name: T;
     /** The URL of the referenced resource */
     url: string;
 }
@@ -137,8 +137,30 @@ export type PokemonType = {
     /** The order the Pokémon's types are listed in */
     slot: number;
     /** The type the referenced Pokémon has */
-    type: NamedAPIResource;
+    type: NamedAPIResource<PokemonTypeNames>;
 }
+
+export type PokemonTypeNames =
+    'bug'
+    | 'dragon'
+    | 'fairy'
+    | 'fire'
+    | 'ghost'
+    | 'ground'
+    | 'normal'
+    | 'psychic'
+    | 'steel'
+    | 'dark'
+    | 'electric'
+    | 'fighting'
+    | 'flying'
+    | 'grass'
+    | 'ice'
+    | 'poison'
+    | 'rock'
+    | 'water'
+
+
 
 /**
  * Data describing a Pokemon's types in a previous generation.

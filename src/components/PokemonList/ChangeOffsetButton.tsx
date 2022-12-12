@@ -8,7 +8,7 @@ interface ChangeOffsetButtonProps extends React.ButtonHTMLAttributes<HTMLButtonE
 
 const ChangeOffsetButton: FC<ChangeOffsetButtonProps> = ({onClick, children, ...rest}) => {
     return (
-        <button className='p-2 h-10 w-10 flex justify-center items-center bg-slate-500 rounded-full text-gray-100' onClick={onClick} {...rest}>
+        <button className='p-2 h-10 w-10 flex justify-center items-center bg-slate-200 rounded-full text-gray-700' onClick={onClick} {...rest}>
             {children}
         </button>
     );
