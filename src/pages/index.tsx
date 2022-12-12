@@ -36,14 +36,14 @@ const Home: NextPage = () => {
                 <PokemonList setQueue={setQueue} />
 
                 <div className="absolute top-5 left-5">
-                    <Link href={'https://github.com/nicofishman/'} target={'_blank'}>
-                        <BsGithub className='fill-slate-200 md:h-16 md:w-16 w-8 h-8'/>
+                    <Link href={'https://github.com/nicofishman/pokedex'} target={'_blank'}>
+                        <BsGithub className='fill-slate-200 md:h-16 md:w-16 w-8 h-8 z-30 relative'/>
                     </Link>
                 </div>
 
                 {/* FIXME: POSICION DEL BOTON EN MD+ */}
                 <button className={classNames('absolute top-5 right-5 transition-transform', !('id' in selectedInFrame && '-translate-y-24' ))}>
-                    <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8' onClick={undoQueue}/>
+                    <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8 z-30 relative' onClick={undoQueue}/>
                 </button>
             </main>
         </>

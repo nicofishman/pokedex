@@ -247,6 +247,8 @@ export type VersionSprites = {
     'generation-viii': GenerationVIIISprites;
 }
 
+export type Generations = keyof VersionSprites;
+
 /**
  * A set of sprites used to depict this Pokémon in the game.
  * A visual representation of the various sprites can be found at [PokeAPI/sprites](https://github.com/PokeAPI/sprites#sprites)
@@ -956,7 +958,7 @@ export type Ability = {
     /** Whether or not this ability originated in the main series of the video games */
     is_main_series: boolean;
     /** The generation this ability originated in */
-    generation: NamedAPIResource;
+    generation: NamedAPIResource<Generations>;
     /** The name of this resource listed in different languages */
     names: Name[];
     /** The effect of this ability listed in different languages */

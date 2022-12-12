@@ -4,7 +4,7 @@ import type { PokemonType } from '../../types';
 import React from 'react';
 import classNames from 'classnames';
 
-import { COLORS } from '../../utils/consts';
+import { TYPE_COLORS } from '../../utils/consts';
 
 
 interface TypeCardsProps {
@@ -15,7 +15,7 @@ const TypeCards: FC<TypeCardsProps> = ({types}) => {
     return (
         <>
             {types.map((type, index) => (
-                <div key={index} className={classNames('flex justify-center py-2 px-7 rounded-lg w-fit', COLORS[type.type.name])}>
+                <div key={index} className={classNames('flex justify-center py-2 px-7 rounded-lg w-fit drop-shadow-lg', TYPE_COLORS[type.type.name])}>
                     <span className="capitalize font-semibold text-base text-slate-200">{type.type.name}</span>
                 </div>
             ))}

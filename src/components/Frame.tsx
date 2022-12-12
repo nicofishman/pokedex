@@ -13,9 +13,9 @@ interface FrameProps {
 
 const Frame: FC<FrameProps> = ({ currentInFrame, setQueue }) => {
     return (
-        <div className="paperTexture relative mx-4 mt-40 md:h-[678px] h-auto w-full max-w-[1000px] overflow-hidden rounded-3xl bg-slate-200 p-5 shadow-2xl shadow-slate-900/50 md:mt-0">
+        <div className="paperTexture relative mx-4 mt-40 md:h-[678px] min-h-[678px] w-full max-w-[1000px] overflow-hidden rounded-3xl bg-slate-200 p-5 shadow-2xl shadow-slate-900/50 md:mt-0">
             <InsideFrame setQueue={setQueue} data={currentInFrame} />
-            <div className="select-none ">
+            <div className="select-none">
 
                 <Image
                     src="/pokeball.png"

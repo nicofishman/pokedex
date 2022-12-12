@@ -17,7 +17,7 @@ interface InsideFrameProps {
 
 const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
     return (
-        <>
+        <div className='relative z-20 h-full'>
             {
                 'abilities' in data ? (
                     <PokemonFrame setQueue={setQueue} pokemon={(data as Pokemon)} />
@@ -29,7 +29,7 @@ const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
                             <PresentationFrame />
                         )
             }
-        </>
+        </div>
     );
 };
 

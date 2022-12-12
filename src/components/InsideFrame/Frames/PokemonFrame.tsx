@@ -17,8 +17,8 @@ interface FrameWithPokemonProps {
 const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
     
     return (
-        <div className='flex flex-col z-[2] relative'>
-            <p className='absolute top-0 left-0 font-semibold'>N° {pokemon.id}</p>
+        <div className='flex flex-col flex-1'>
+            <p className='absolute top-0 left-0 font-semibold text-slate-900'>N° {pokemon.id}</p>
 
             <div className='md:h-10 flex flex-col items-center md:mt-0 mt-10 h-auto'>
                 <div className="flex-1 flex-row flex">

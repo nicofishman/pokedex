@@ -7,8 +7,8 @@ interface PresentationFrameProps {}
 
 const PresentationFrame: FC<PresentationFrameProps> = () => {
     return (
-        <div className="flex flex-col select-none justify-around h-full text-center z-10">
-            <div className="group flex flex-col">
+        <div className="flex flex-col select-none justify-around items-center text-center z-10 h-[678px] md:h-full">
+            <div className="group flex flex-col justify-center w-full">
                 <h1 className="text-3xl font-bold transition-transform group-hover:translate-x-4">
                     Bienvenido a mi Pokedex!
                 </h1>
