@@ -1,6 +1,7 @@
-import type { Pokemon, PokemonResponse } from '../../../types';
+import type { Ability, Pokemon, PokemonResponse } from '../../../types';
 
 import { z } from 'zod';
+import input from 'postcss/lib/input';
 
 import { router, publicProcedure } from '../trpc';
 
@@ -62,4 +63,16 @@ export const pokedexRouter = router({
                 })
             );
         }),
+    getAbilities: publicProcedure
+        .input(z.array(z.string().url()))
+        .query(async ({ input }): Promise<Ability[]> => {
+            return await Promise.all(
+                input.map(async (url) => {
+                    const res = await fetch(url);
+                    const pokeRes = (await res.json()) as Ability;
+
+                    return pokeRes;
+                })
+            );
+        })
 });

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import type { Pokemon } from '../types';
+import type { Ability, Pokemon } from '../types';
 
 import {BsGithub} from 'react-icons/bs';
 import Head from 'next/head';
@@ -11,15 +11,17 @@ import classNames from 'classnames';
 import PokemonList from '../components/PokemonList/PokemonList';
 import Frame from '../components/Frame';
 
+export type Selectable = Pokemon | Ability;
+
 const Home: NextPage = () => {
-    const [pokemonQueue, setPokemonQueue] = useState<Pokemon[]>([]);
+    const [queue, setQueue] = useState<(Selectable)[]>([]);
     
-    const selectedPokemon = useMemo(() => pokemonQueue[pokemonQueue.length - 1]  || {} as Pokemon, [pokemonQueue])
+    const selectedInFrame = useMemo(() => queue[queue.length - 1]  || {} as Pokemon, [queue])
 
     const undoQueue = () => {
-        const sliced = pokemonQueue.slice(0, -1);
+        const sliced = queue.slice(0, -1);
 
-        setPokemonQueue(sliced);
+        setQueue(sliced);
     }
 
     return (
@@ -30,8 +32,8 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="backgroundBlur relative flex min-h-screen flex-row items-center justify-center overflow-hidden bg-background bg-cover bg-center bg-no-repeat">
-                <Frame currentPokemon={selectedPokemon} />
-                <PokemonList setPokemonQueue={setPokemonQueue} />
+                <Frame setQueue={setQueue} currentInFrame={selectedInFrame} />
+                <PokemonList setQueue={setQueue} />
 
                 <div className="absolute top-5 left-5">
                     <Link href={'https://github.com/nicofishman/'} target={'_blank'}>
@@ -40,7 +42,7 @@ const Home: NextPage = () => {
                 </div>
 
                 {/* FIXME: POSICION DEL BOTON EN MD+ */}
-                <button className={classNames('absolute top-5 right-5 transition-transform', !('id' in selectedPokemon && '-translate-y-24' ))}>
+                <button className={classNames('absolute top-5 right-5 transition-transform', !('id' in selectedInFrame && '-translate-y-24' ))}>
                     <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8' onClick={undoQueue}/>
                 </button>
             </main>

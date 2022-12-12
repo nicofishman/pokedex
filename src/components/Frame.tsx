@@ -1,24 +1,20 @@
 import type { FC } from 'react';
-import type { Pokemon } from '../types';
+import type { Selectable } from '../pages';
 
 import Image from 'next/image';
 import React from 'react';
 
-import PresentationFrame from './PresentationFrame';
-import PokemonFrame from './PokemonFrame/PokemonFrame';
+import InsideFrame from './InsideFrame/InsideFrame';
 
 interface FrameProps {
-    currentPokemon: Pokemon;
+    currentInFrame: Selectable;
+    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const Frame: FC<FrameProps> = ({ currentPokemon }) => {
+const Frame: FC<FrameProps> = ({ currentInFrame, setQueue }) => {
     return (
         <div className="paperTexture relative mx-4 mt-40 md:h-[678px] h-auto w-full max-w-[1000px] overflow-hidden rounded-3xl bg-slate-200 p-5 shadow-2xl shadow-slate-900/50 md:mt-0">
-            {'id' in currentPokemon ? (
-                <PokemonFrame pokemon={currentPokemon} />
-            ) : (
-                <PresentationFrame />
-            )}
+            <InsideFrame setQueue={setQueue} data={currentInFrame} />
             <div className="select-none ">
 
                 <Image

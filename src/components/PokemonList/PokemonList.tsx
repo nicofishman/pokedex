@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { Pokemon } from '../../types';
+import type { Selectable } from '../../pages';
 
 import Image from 'next/image';
 import { useState } from 'react';
@@ -12,10 +12,10 @@ import Loader from '../Loader';
 import ChangeOffsetButton from './ChangeOffsetButton';
 
 interface PokemonListProps {
-    setPokemonQueue: React.Dispatch<React.SetStateAction<Pokemon[]>>;
+    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const PokemonList: FC<PokemonListProps> = ({ setPokemonQueue }) => {
+const PokemonList: FC<PokemonListProps> = ({ setQueue }) => {
     const [offset, setOffset] = useState(0);
     const pokemons = usePokemons(offset, CONCURRENT_POKEDEX);
 
@@ -37,7 +37,7 @@ const PokemonList: FC<PokemonListProps> = ({ setPokemonQueue }) => {
                             key={pokemon.id}
                             className="mb-0 flex w-full cursor-pointer flex-row items-center gap-2 rounded-full border-b-2 border-b-slate-300 bg-slate-200  transition-transform md:mb-2 md:rounded-l-full md:rounded-r-none md:hover:translate-x-[-50%]"
                             onClick={() => {
-                                setPokemonQueue((p) => [...p, pokemon])
+                                setQueue((p) => [...p, pokemon])
                             }}
                         >
                             <Image

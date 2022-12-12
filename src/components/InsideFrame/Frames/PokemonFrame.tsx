@@ -1,23 +1,27 @@
 import type { FC } from 'react';
-import type { Pokemon } from '../../types';
+import type { Pokemon } from '../../../types';
+import type { Selectable } from '../../../pages';
 
 import React from 'react';
 import Image from 'next/image';
 
-import TypeCards from './TypeCards';
-import Habilidades from './Habilidades';
-import Estadisticas from './Estadisticas';
+import TypeCards from '../TypeCards';
+import Habilidades from '../Habilidades';
+import Estadisticas from '../Estadisticas';
 
 interface FrameWithPokemonProps {
     pokemon: Pokemon;
+    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon}) => {
+const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
     
     return (
         <div className='flex flex-col z-[2] relative'>
+            <p className='absolute top-0 left-0 font-semibold'>N° {pokemon.id}</p>
+
             <div className='md:h-10 flex flex-col items-center md:mt-0 mt-10 h-auto'>
-                <div className="flex-1">
+                <div className="flex-1 flex-row flex">
                     <h1 className="text-center text-3xl capitalize font-bold">{pokemon.name}</h1>
                 </div>
                 <div className="md:absolute md:top-0 md:right-0 flex justify-end gap-2 ">
@@ -37,7 +41,7 @@ const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon}) => {
                     <div>
                         <h4 className="font-semibold w-full bg-neutral-700 text-white py-3 pl-2 mb-2">Habilidades</h4>
                         <div className="flex flex-row flex-wrap gap-2">
-                            <Habilidades abilidades={pokemon.abilities} />
+                            <Habilidades setQueue={setQueue} habilidades={pokemon.abilities} />
                         </div>
                     </div>
                     <div>
