@@ -22,7 +22,9 @@ const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue}) => {
             {
                 abilities.sort((a, b) => (a === b)? 0 : a? -1 : 1).map((ability, index) => (
                     <button key={index} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md" onClick={() => setQueue(queue => [...queue, ability])}>
-                        <h4 className="text-center text-xl capitalize font-bold">{ability.name}</h4>
+                        <h4 className="text-center text-xl capitalize font-bold">
+                            {ability.names.find(ab => ab.language.name === 'es')?.name || ability.names.find(ab => ab.language.name === 'en')?.name}
+                        </h4>
                     </button>
                 )
                 )

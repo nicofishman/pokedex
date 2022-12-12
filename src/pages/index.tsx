@@ -16,7 +16,11 @@ export type Selectable = Pokemon | Ability;
 const Home: NextPage = () => {
     const [queue, setQueue] = useState<(Selectable)[]>([]);
     
-    const selectedInFrame = useMemo(() => queue[queue.length - 1]  || {} as Pokemon, [queue])
+    const selectedInFrame = useMemo(() => {        
+        return queue[queue.length - 1]  || {} as Pokemon
+    }, [queue])
+    
+
 
     const undoQueue = () => {
         const sliced = queue.slice(0, -1);
@@ -42,7 +46,7 @@ const Home: NextPage = () => {
                 </div>
 
                 {/* FIXME: POSICION DEL BOTON EN MD+ */}
-                <button className={classNames('absolute top-5 right-5 transition-transform', !('id' in selectedInFrame && '-translate-y-24' ))}>
+                <button className={classNames('absolute top-5 right-5 transition-transform', (!selectedInFrame.id) ? '-translate-y-24' : '' )}>
                     <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8 z-30 relative' onClick={undoQueue}/>
                 </button>
             </main>

@@ -23,7 +23,7 @@ const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
                     <PokemonFrame setQueue={setQueue} pokemon={(data as Pokemon)} />
                 ) : 
                     'is_main_series' in data ? (
-                        <AbilityFrame ability={(data as Ability)} />
+                        <AbilityFrame setQueue={setQueue} ability={(data as Ability)} />
                     ) :
                         (
                             <PresentationFrame />
