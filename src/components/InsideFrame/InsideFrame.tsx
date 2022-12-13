@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import type { Selectable } from '../../pages';
-import type { Ability, SelectablePokemon } from '../../types';
 
 import React from 'react';
 
@@ -13,11 +12,9 @@ import PokemonFrame from './Frames/PokemonFrame';
 interface InsideFrameProps {
     data: Selectable;
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
-    abilitiesList: Ability[];
-    pokemonsList: SelectablePokemon[];
 }
 
-const InsideFrame: FC<InsideFrameProps> = ({data, setQueue, abilitiesList, pokemonsList}) => {
+const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
     return (
         <div className='relative z-20 h-full'>
             {
@@ -25,10 +22,10 @@ const InsideFrame: FC<InsideFrameProps> = ({data, setQueue, abilitiesList, pokem
                     <PresentationFrame />
                 ) : (
                     data.type === 'pokemon' ? (
-                        <PokemonFrame setQueue={setQueue} pokemon={(data.data)} abilitiesList={abilitiesList}/>
+                        <PokemonFrame setQueue={setQueue} pokemon={(data.data)} />
                     ) : (
                         data.type === 'ability' && (
-                            <AbilityFrame setQueue={setQueue} ability={data.data} pokemonsList={pokemonsList} />
+                            <AbilityFrame setQueue={setQueue} ability={data.data}  />
                         )
                     )
                 )

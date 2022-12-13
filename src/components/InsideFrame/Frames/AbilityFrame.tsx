@@ -1,9 +1,10 @@
 import type { Selectable } from '../../../pages';
-import type { Ability, SelectablePokemon } from '../../../types';
+import type { Ability } from '../../../types';
 
 import classNames from 'classnames';
 import React from 'react';
 
+import { useData } from '../../../context/dataContext';
 import { GENERATION_COLORS } from '../../../utils/consts';
 import Loader from '../../Loader';
 
@@ -12,11 +13,10 @@ import Loader from '../../Loader';
 interface AbilityFrameProps {
     ability: Ability;
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
-    pokemonsList: SelectablePokemon[];
 }
 
-const AbilityFrame = ({ability, setQueue, pokemonsList }: AbilityFrameProps) => {
-
+const AbilityFrame = ({ability, setQueue }: AbilityFrameProps) => {
+    const { pokemonsList } = useData();
     const abilityName = ability.names.find(ab => ab.language.name === 'es')?.name || ability.names.find(ab => ab.language.name === 'en')?.name;
 
     const abilityEffectEntry = ability.effect_entries.find(eff => eff.language.name === 'es') ||

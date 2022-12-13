@@ -4,13 +4,14 @@ import type { Ability, Pokemon, SelectablePokemon } from '../types';
 import classNames from 'classnames';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BsGithub } from 'react-icons/bs';
 import { ImUndo2 } from 'react-icons/im';
 
 import Frame from '../components/Frame';
 import PokemonList from '../components/PokemonList/PokemonList';
 import { preFetchAllAbilities, preFetchAllPokemons } from '../server/pokedex/pokeApi';
+import { useData } from '../context/dataContext';
 
 export type Selectable = {
     type: 'pokemon';
@@ -29,7 +30,15 @@ interface HomeProps extends InferGetStaticPropsType<typeof getStaticProps> {
 
 const Home: NextPage<HomeProps> = ({pokemons, abilities}) => {
     const [queue, setQueue] = useState<(Selectable)[]>([]);
+
+    const {setPokemonsList, setAbilitiesList} = useData();
     
+    useEffect(() => {
+        setPokemonsList(pokemons);
+        setAbilitiesList(abilities);
+    }, [abilities, pokemons, setAbilitiesList, setPokemonsList])
+    
+
     const selectedInFrame = useMemo(() => {        
         return queue[queue.length - 1]  || {
             type: 'presentation',
@@ -50,7 +59,7 @@ const Home: NextPage<HomeProps> = ({pokemons, abilities}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="backgroundBlur relative flex min-h-screen flex-row items-center justify-center overflow-hidden bg-background bg-cover bg-center bg-no-repeat">
-                <Frame setQueue={setQueue} currentInFrame={selectedInFrame} abilitiesList={abilities} pokemonsList={pokemons}/>
+                <Frame setQueue={setQueue} currentInFrame={selectedInFrame}/>
                 <PokemonList pokemons={pokemons} setQueue={setQueue} />
 
                 <div className="absolute top-5 left-5">
