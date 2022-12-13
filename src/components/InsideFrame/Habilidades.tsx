@@ -1,38 +1,53 @@
 import type { FC } from 'react';
-import type { Pokemon } from '../../types';
 import type { Selectable } from '../../pages';
+import type { Ability, SelectablePokemon } from '../../types';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import React from 'react';
 
-import { trpc } from '../../utils/trpc';
-import Loader from '../Loader';
+import { preFetchAllAbilities } from '../../server/pokedex/pokeApi';
 
-
-
-interface HabilidadesProps {
-    habilidades: Pokemon['abilities']
+interface HabilidadesProps extends Partial<InferGetStaticPropsType<typeof getStaticProps>> {
+    habilidades: SelectablePokemon['abilities']
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
+    ablitiesList: Ability[];
 }
 
-const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue}) => {
-    const {data: abilities} = trpc.pokedex.getAbilities.useQuery(habilidades.map(h => h.ability.url));
-
-    return abilities ? (
+const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue, ablitiesList}) => {
+    
+    return (
         <>
             {
-                abilities.sort((a, b) => (a === b)? 0 : a? -1 : 1).map((ability, index) => (
-                    <button key={index} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md" onClick={() => setQueue(queue => [...queue, ability])}>
-                        <h4 className="text-center text-xl capitalize font-bold">
-                            {ability.names.find(ab => ab.language.name === 'es')?.name || ability.names.find(ab => ab.language.name === 'en')?.name}
-                        </h4>
-                    </button>
-                )
+                habilidades.sort((a, b) => (a === b)? 0 : a? -1 : 1).map((ability, index) => { 
+                    const abilityFromCompleteList = ablitiesList?.find(ab => ab.name === ability.ability.name);
+
+                    return (
+                        <button key={index} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md" 
+                            onClick={() => setQueue(queue => [...queue, {
+                                type: 'ability',
+                                data: abilityFromCompleteList || {} as Ability
+                            }])}>
+                            <h4 className="text-center text-xl capitalize font-bold">
+                                {abilityFromCompleteList?.names.find(ab => ab.language.name === 'es')?.name || abilityFromCompleteList?.names.find(ab => ab.language.name === 'en')?.name}
+                            </h4>
+                        </button>
+                    )}
                 )
             }
         </>
-    ) : (
-        <Loader />
     )
 };
 
 export default Habilidades;
+
+export const getStaticProps: GetStaticProps<{
+    habilidadesList: Ability[],
+}> = async () => {
+    const habilidadesList = await preFetchAllAbilities();    
+
+    return {
+        props: {
+            habilidadesList,
+        }
+    }
+}

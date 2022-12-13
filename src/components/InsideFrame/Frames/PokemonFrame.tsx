@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { Pokemon } from '../../../types';
+import type { Ability, Pokemon, SelectablePokemon } from '../../../types';
 import type { Selectable } from '../../../pages';
 
 import React from 'react';
@@ -11,12 +11,12 @@ import Habilidades from '../Habilidades';
 import Estadisticas from '../Estadisticas';
 
 interface FrameWithPokemonProps {
-    pokemon: Pokemon;
+    pokemon: Pokemon | SelectablePokemon;
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
+    abilitiesList: Ability[]
 }
 
-const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
-    
+const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue, abilitiesList}) => {
     return (
         <div className='flex flex-col flex-1'>
             <p className='absolute top-0 left-0 font-semibold text-slate-900'>N° {pokemon.id}</p>
@@ -40,14 +40,13 @@ const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
                         width={400} height={400} 
                         className='md:w-96 w-48 h-auto aspect-square hover:scale-105 transition-transform hover:rotate-[5deg]'
                         loading='eager'
-
                     />
                 </div>
                 <div className="flex-1 flex flex-col gap-5">
                     <div>
                         <h4 className="font-semibold w-full bg-gradient text-white py-3 pl-2 mb-2">Habilidades</h4>
                         <div className="flex flex-row flex-wrap gap-2">
-                            <Habilidades setQueue={setQueue} habilidades={pokemon.abilities} />
+                            <Habilidades setQueue={setQueue} habilidades={pokemon.abilities} ablitiesList={abilitiesList} />
                         </div>
                     </div>
                     <div>

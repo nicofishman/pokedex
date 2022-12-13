@@ -1,12 +1,10 @@
-import type { FC } from 'react';
-import type { Ability } from '../../../types';
 import type { Selectable } from '../../../pages';
+import type { Ability, SelectablePokemon } from '../../../types';
 
+import classNames from 'classnames';
 import React from 'react';
-import classNames  from 'classnames';
 
 import { GENERATION_COLORS } from '../../../utils/consts';
-import { trpc } from '../../../utils/trpc';
 import Loader from '../../Loader';
 
 
@@ -14,15 +12,17 @@ import Loader from '../../Loader';
 interface AbilityFrameProps {
     ability: Ability;
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
+    pokemonsList: SelectablePokemon[];
 }
 
-const AbilityFrame: FC<AbilityFrameProps> = ({ability, setQueue}) => {
+const AbilityFrame = ({ability, setQueue, pokemonsList }: AbilityFrameProps) => {
+
     const abilityName = ability.names.find(ab => ab.language.name === 'es')?.name || ability.names.find(ab => ab.language.name === 'en')?.name;
 
     const abilityEffectEntry = ability.effect_entries.find(eff => eff.language.name === 'es') ||
                             ability.effect_entries.find(eff => eff.language.name === 'en');
 
-    const pokemonsInside = trpc.pokedex.getPokemonsFromList.useQuery(ability.pokemon.map(p => p.pokemon.url));
+    const pokemonsInside = pokemonsList?.filter(pokemon => ability.pokemon.map(p => p.pokemon.name).includes(pokemon.name));
 
     return (
         <div className='relative flex-col flex h-full'>
@@ -49,11 +49,14 @@ const AbilityFrame: FC<AbilityFrameProps> = ({ability, setQueue}) => {
                     </div>
                     <div className='flex-1'>
                         <h4 className="font-semibold w-full bg-gradient text-white py-3 pl-2 mb-2">Pokemons</h4>
-                        { pokemonsInside.data ? (
+                        {pokemonsInside ? (
                             <div className='flex flex-wrap flex-1'>
                                 {
-                                    pokemonsInside.data.map((pokemon) => (
-                                        <button key={pokemon.name} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md mr-2 mb-2" onClick={() => setQueue(queue => [...queue, pokemon])}>
+                                    pokemonsInside.map((pokemon) => (
+                                        <button key={pokemon.name} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md mr-2 mb-2" onClick={() => setQueue(queue => [...queue, {
+                                            type: 'pokemon',
+                                            data: pokemon
+                                        }])}>
                                             <h4 className="text-center text-base capitalize font-bold">
                                                 {pokemon.name}
                                             </h4>

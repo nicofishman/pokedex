@@ -1,26 +1,40 @@
-import type { NextPage } from 'next';
-import type { Ability, Pokemon } from '../types';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import type { Ability, Pokemon, SelectablePokemon } from '../types';
 
-import {BsGithub} from 'react-icons/bs';
-import Head from 'next/head';
-import { useMemo, useState } from 'react';
-import Link from 'next/link';
-import { ImUndo2 } from 'react-icons/im';
 import classNames from 'classnames';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useMemo, useState } from 'react';
+import { BsGithub } from 'react-icons/bs';
+import { ImUndo2 } from 'react-icons/im';
 
-import PokemonList from '../components/PokemonList/PokemonList';
 import Frame from '../components/Frame';
+import PokemonList from '../components/PokemonList/PokemonList';
+import { preFetchAllAbilities, preFetchAllPokemons } from '../server/pokedex/pokeApi';
 
-export type Selectable = Pokemon | Ability | Partial<Pokemon>;
+export type Selectable = {
+    type: 'pokemon';
+    data: Pokemon | SelectablePokemon;
+} | {
+    type: 'ability';
+    data: Ability
+} | {
+    type: 'presentation';
+    data?: never;
+};
 
-const Home: NextPage = () => {
+interface HomeProps extends InferGetStaticPropsType<typeof getStaticProps> {
+
+}
+
+const Home: NextPage<HomeProps> = ({pokemons, abilities}) => {
     const [queue, setQueue] = useState<(Selectable)[]>([]);
     
     const selectedInFrame = useMemo(() => {        
-        return queue[queue.length - 1]  || {} as Pokemon
+        return queue[queue.length - 1]  || {
+            type: 'presentation',
+        } as Selectable;
     }, [queue])
-    
-
 
     const undoQueue = () => {
         const sliced = queue.slice(0, -1);
@@ -36,8 +50,8 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="backgroundBlur relative flex min-h-screen flex-row items-center justify-center overflow-hidden bg-background bg-cover bg-center bg-no-repeat">
-                <Frame setQueue={setQueue} currentInFrame={selectedInFrame} />
-                <PokemonList setQueue={setQueue} />
+                <Frame setQueue={setQueue} currentInFrame={selectedInFrame} abilitiesList={abilities} pokemonsList={pokemons}/>
+                <PokemonList pokemons={pokemons} setQueue={setQueue} />
 
                 <div className="absolute top-5 left-5">
                     <Link href={'https://github.com/nicofishman/pokedex'} target={'_blank'}>
@@ -46,7 +60,7 @@ const Home: NextPage = () => {
                 </div>
 
                 {/* FIXME: POSICION DEL BOTON EN MD+ */}
-                <button className={classNames('absolute top-5 right-5 transition-transform', (!selectedInFrame.id) ? '-translate-y-24' : '' )}>
+                <button className={classNames('absolute top-5 right-5 transition-transform', (selectedInFrame.type === 'presentation') ? '-translate-y-24' : '' )}>
                     <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8 z-30 relative' onClick={undoQueue}/>
                 </button>
             </main>
@@ -55,3 +69,18 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getStaticProps: GetStaticProps<{
+    pokemons: Pick<Pokemon, 'id' | 'name' | 'abilities' | 'sprites' | 'types' | 'stats' | 'height'>[],
+    abilities: Ability[]
+}> = async () => {
+    const pokemons = await preFetchAllPokemons();
+    const abilities = await preFetchAllAbilities();
+
+    return {
+        props: {
+            pokemons,
+            abilities
+        },
+    }
+}

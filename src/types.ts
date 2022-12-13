@@ -1035,3 +1035,7 @@ export type PokemonResponse = {
     previous?: string;
     results: NamedAPIResource[]
 }
+
+export type AbilityResponse = PokemonResponse;
+
+export type SelectablePokemon = Pick<Pokemon, 'id' | 'name' | 'abilities' | 'sprites' | 'types' | 'stats' | 'height'>;

@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { Selectable } from '../pages';
+import type { Ability, SelectablePokemon } from '../types';
 
 import Image from 'next/image';
 import React from 'react';
@@ -9,12 +10,14 @@ import InsideFrame from './InsideFrame/InsideFrame';
 interface FrameProps {
     currentInFrame: Selectable;
     setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
+    abilitiesList: Ability[];
+    pokemonsList: SelectablePokemon[];
 }
 
-const Frame: FC<FrameProps> = ({ currentInFrame, setQueue }) => {
+const Frame: FC<FrameProps> = ({ currentInFrame, setQueue, abilitiesList, pokemonsList }) => {
     return (
         <div className="paperTexture relative mx-4 mt-40 md:h-[678px] min-h-[678px] w-full max-w-[1000px] overflow-hidden rounded-3xl bg-slate-200 p-5 shadow-2xl shadow-slate-900/50 md:mt-0">
-            <InsideFrame setQueue={setQueue} data={currentInFrame} />
+            <InsideFrame setQueue={setQueue} data={currentInFrame} abilitiesList={abilitiesList} pokemonsList={pokemonsList} />
             <div className="select-none">
 
                 <Image
