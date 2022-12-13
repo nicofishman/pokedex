@@ -21,7 +21,7 @@ const PokemonList: FC<PokemonListProps> = ({ setQueue, pokemons }) => {
     const currentPokemons = pokemons?.slice(offset, offset + CONCURRENT_POKEDEX);
 
     return (
-        <div className="absolute z-20 top-5 flex w-fit flex-row items-center justify-center gap-2 px-4 md:right-0 md:top-[50%] md:translate-y-[-50%] md:flex-col md:justify-end md:gap-5 md:px-0 select-none">
+        <div className="absolute z-10 top-5 flex w-fit flex-row items-center justify-center gap-2 px-4 md:right-0 md:top-[50%] md:translate-y-[-50%] md:flex-col md:justify-end md:gap-5 md:px-0 select-none">
             {offset > 0 && (
                 <div className="md:mr-8 md:flex md:w-full md:justify-end">
                     <ChangeOffsetButton

@@ -21,9 +21,9 @@ interface FrameWithPokemonProps {
 const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
 
     return (
-        <div className='flex flex-col flex-1'>
-            <div className="absolute top-0 left-0 flex items-center">
-                <p className='font-semibold text-slate-900'>N° {pokemon.id}</p>
+        <div className='flex flex-col relative'>
+            <div className="absolute top-0 left-0 flex justify-between md:justify-start items-center w-full">
+                <p className='font-semibold text-slate-900 z-[8]'>N° {pokemon.id}</p>
                 <Favorite data={{
                     type: 'pokemon',
                     data: pokemon
