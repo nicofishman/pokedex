@@ -7,6 +7,7 @@ import React from 'react';
 
 import { preFetchAllAbilities } from '../../server/pokedex/pokeApi';
 import { useData } from '../../context/dataContext';
+import { PokemonOrAbilityButton } from '../UI/PokemonOrAbilityButton';
 
 interface HabilidadesProps extends Partial<InferGetStaticPropsType<typeof getStaticProps>> {
     habilidades: SelectablePokemon['abilities']
@@ -24,7 +25,7 @@ const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue}) => {
                     const abilityFromCompleteList = abilitiesList?.find(ab => ab.name === ability.ability.name);
 
                     return (
-                        <button key={index} className="bg-neutral-700/50 text-slate-200 p-2 rounded-md" 
+                        <PokemonOrAbilityButton key={index}
                             onClick={() => setQueue(queue => [...queue, {
                                 type: 'ability',
                                 data: abilityFromCompleteList || {} as Ability
@@ -32,7 +33,7 @@ const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue}) => {
                             <h4 className="text-center text-xl capitalize font-bold">
                                 {abilityFromCompleteList?.names.find(ab => ab.language.name === 'es')?.name || abilityFromCompleteList?.names.find(ab => ab.language.name === 'en')?.name}
                             </h4>
-                        </button>
+                        </PokemonOrAbilityButton>
                     )}
                 )
             }

@@ -3,10 +3,9 @@ import type { Selectable } from '../../pages';
 
 import React from 'react';
 
-import PresentationFrame from '../PresentationFrame';
-
-import AbilityFrame from './Frames/AbilityFrame';
-import PokemonFrame from './Frames/PokemonFrame';
+import PresentationFrame from '../Frames/PresentationFrame';
+import AbilityFrame from '../Frames/AbilityFrame';
+import PokemonFrame from '../Frames/PokemonFrame';
 
 
 interface InsideFrameProps {
