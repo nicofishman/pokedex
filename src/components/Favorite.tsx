@@ -28,13 +28,11 @@ const Favorite: FC<FavoriteProps> = ({data}) => {
 
     return isFavorite ? (
         <StarButton
-            className='z-[150]'
             onClick={() => removeFavorite(data)}>
             <AiFillStar />
         </StarButton>
     ) : (
         <StarButton
-            className='z-[150]'
             onClick={() => addFavorite(data)}>
             <AiOutlineStar />
         </StarButton>

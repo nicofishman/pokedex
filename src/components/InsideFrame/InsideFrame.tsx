@@ -15,7 +15,7 @@ interface InsideFrameProps {
 
 const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
     return (
-        <div className='relative h-full'>
+        <div className='relative z-20 h-full'>
             {
                 data.type === 'presentation' ? (
                     <PresentationFrame />

@@ -22,17 +22,15 @@ const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
 
     return (
         <div className='flex flex-col relative'>
-            <div className="absolute top-0 left-0 flex justify-between md:justify-start items-center w-full">
-                <p className='font-semibold text-slate-900 z-[8]'>N° {pokemon.id}</p>
-                <Favorite data={{
-                    type: 'pokemon',
-                    data: pokemon
-                }} />
-            </div>
-
+            <p className='absolute top-0 left-0 font-semibold text-slate-900'>N° {pokemon.id}</p>            
             <div className='md:h-10 flex flex-col items-center md:mt-0 mt-10 h-auto'>
-                <div className="flex-1 flex-row flex">
+                <div className="flex-1 flex">
                     <h1 className="text-center text-3xl capitalize font-bold">{pokemon.name}</h1>
+                    <Favorite 
+                        data={{
+                            type: 'pokemon',
+                            data: pokemon
+                        }} />
                 </div>
                 <div className="md:absolute md:top-0 md:right-0 flex flex-wrap justify-center md:justify-end gap-2">
                     <div className='flex items-center p-2 rounded-md gap-1 bg-white/50'>
