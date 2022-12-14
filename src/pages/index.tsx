@@ -2,11 +2,11 @@ import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import type { Ability, Pokemon, SelectablePokemon } from '../types';
 
 import classNames from 'classnames';
-import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { BsGithub } from 'react-icons/bs';
 import { ImUndo2 } from 'react-icons/im';
+import { MdFavorite } from 'react-icons/md';
 
 import Frame from '../components/Frame';
 import PokemonList from '../components/PokemonList/PokemonList';
@@ -29,9 +29,8 @@ interface HomeProps extends InferGetStaticPropsType<typeof getStaticProps> {
 }
 
 const Home: NextPage<HomeProps> = ({pokemons, abilities}) => {
-    const [queue, setQueue] = useState<(Selectable)[]>([]);
 
-    const {setPokemonsList, setAbilitiesList} = useData();
+    const { setPokemonsList, setAbilitiesList, selectedInFrame, undoQueue } = useData();
     
     useEffect(() => {
         setPokemonsList(pokemons);
@@ -39,40 +38,26 @@ const Home: NextPage<HomeProps> = ({pokemons, abilities}) => {
     }, [abilities, pokemons, setAbilitiesList, setPokemonsList])
     
 
-    const selectedInFrame = useMemo(() => {        
-        return queue[queue.length - 1]  || {
-            type: 'presentation',
-        } as Selectable;
-    }, [queue])
-
-    const undoQueue = () => {
-        const sliced = queue.slice(0, -1);
-
-        setQueue(sliced);
-    }
+    
 
     return (
         <>
-            <Head>
-                <title>Pokedex</title>
-                <meta name="description" content="Proyecto frontend pokedex" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <main className="backgroundBlur relative flex min-h-screen flex-row items-center justify-center overflow-hidden bg-background bg-cover bg-center bg-no-repeat">
-                <Frame setQueue={setQueue} currentInFrame={selectedInFrame}/>
-                <PokemonList pokemons={pokemons} setQueue={setQueue} />
+            <Frame currentInFrame={selectedInFrame}/>
+            <PokemonList pokemons={pokemons} />
 
-                <div className="absolute top-5 left-5">
-                    <Link href={'https://github.com/nicofishman/pokedex'} target={'_blank'}>
-                        <BsGithub className='fill-slate-200 md:h-16 md:w-16 w-8 h-8 z-30 relative'/>
-                    </Link>
-                </div>
+            <div className="absolute top-5 left-5">
+                <Link prefetch href={'https://github.com/nicofishman/pokedex'} target={'_blank'}>
+                    <BsGithub className='fill-slate-200 md:h-16 md:w-16 w-8 h-8 z-30 relative'/>
+                </Link>
+            </div>
 
-                {/* FIXME: POSICION DEL BOTON EN MD+ */}
-                <button className={classNames('absolute top-5 right-5 transition-transform', (selectedInFrame.type === 'presentation') ? '-translate-y-24' : '' )}>
-                    <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8 z-30 relative' onClick={undoQueue}/>
-                </button>
-            </main>
+            {/* FIXME: POSICION DEL BOTON EN MD+ */}
+            <button className={classNames('absolute top-5 right-5 transition-transform', (selectedInFrame.type === 'presentation') ? '-translate-y-24' : '' )}>
+                <ImUndo2 className='fill-slate-200 h-auto aspect-square md:w-16 w-8 z-30 relative' onClick={undoQueue}/>
+            </button>
+            <Link href={'/favorites'} className={classNames('absolute top-5 right-5 transition-transform', (selectedInFrame.type !== 'presentation' ? '-translate-y-24' : ''))}>
+                <MdFavorite className='fill-red-400 hover:fill-red-600 h-auto aspect-square md:w-16 w-8 z-30 relative'/>
+            </Link>
         </>
     );
 };

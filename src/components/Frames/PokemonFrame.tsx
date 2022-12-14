@@ -1,9 +1,7 @@
 import type { FC } from 'react';
-import type { Selectable } from '../../pages';
 import type { Pokemon, SelectablePokemon } from '../../types';
 
 import Image from 'next/image';
-import React from 'react';
 import { GiBodyHeight } from 'react-icons/gi';
 
 import Favorite from '../Favorite';
@@ -15,10 +13,9 @@ import { FrameTitle } from '../UI/FrameTitle';
 
 interface FrameWithPokemonProps {
     pokemon: Pokemon | SelectablePokemon;
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
+const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon}) => {
 
     return (
         <div className='flex flex-col relative'>
@@ -53,7 +50,7 @@ const PokemonFrame: FC<FrameWithPokemonProps> = ({pokemon, setQueue}) => {
                     <div>
                         <FrameTitle>Habilidades</FrameTitle>
                         <div className="flex flex-row flex-wrap gap-2">
-                            <Habilidades setQueue={setQueue} habilidades={pokemon.abilities} />
+                            <Habilidades habilidades={pokemon.abilities} />
                         </div>
                     </div>
                     <div>

@@ -1,8 +1,6 @@
-import type { Selectable } from '../../pages';
 import type { Ability } from '../../types';
 
 import classNames from 'classnames';
-import React from 'react';
 
 import { useData } from '../../context/dataContext';
 import { GENERATION_COLORS } from '../../utils/consts';
@@ -17,10 +15,9 @@ import Nombres from './../AbilityFrame/Nombres';
 
 interface AbilityFrameProps {
     ability: Ability;
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const AbilityFrame = ({ability, setQueue }: AbilityFrameProps) => {
+const AbilityFrame = ({ability }: AbilityFrameProps) => {
     const { pokemonsList } = useData();
     const abilityName = ability.names.find(ab => ab.language.name === 'es')?.name || ability.names.find(ab => ab.language.name === 'en')?.name;
 
@@ -50,7 +47,7 @@ const AbilityFrame = ({ability, setQueue }: AbilityFrameProps) => {
                 <div className="flex-1 flex flex-col gap-5 h-max">
                     <AbilityEffectEntry abilityEffectEntries={ability.effect_entries}/>
                     <div className='flex-1'>
-                        <Pokemons pokemons={pokemonsInside} setQueue={setQueue} />
+                        <Pokemons pokemons={pokemonsInside} />
                     </div>
                 </div>
                 <div className="flex-1 flex flex-col gap-2">

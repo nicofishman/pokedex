@@ -1,5 +1,4 @@
 import type { FC} from 'react';
-import type { Selectable } from '../../pages';
 import type { Ability, SelectablePokemon } from '../../types';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
@@ -11,17 +10,16 @@ import { PokemonOrAbilityButton } from '../UI/PokemonOrAbilityButton';
 
 interface HabilidadesProps extends Partial<InferGetStaticPropsType<typeof getStaticProps>> {
     habilidades: SelectablePokemon['abilities']
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const Habilidades: FC<HabilidadesProps> = ({habilidades, setQueue}) => {
+const Habilidades: FC<HabilidadesProps> = ({habilidades}) => {
 
-    const { abilitiesList } = useData();
+    const { abilitiesList, setQueue } = useData();
     
     return (
         <>
             {
-                habilidades.sort((a, b) => (a === b)? 0 : a? -1 : 1).map((ability, index) => { 
+                habilidades.map((ability, index) => { 
                     const abilityFromCompleteList = abilitiesList?.find(ab => ab.name === ability.ability.name);
 
                     return (

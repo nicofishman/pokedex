@@ -22,7 +22,7 @@ const PresentationFrame: FC<PresentationFrameProps> = () => {
             <div className="mt-20">
                 <h2 className='font-semibold'>
                     Este proyecto fue hecho por {' '}
-                    <Link target='_blank' href={'https://www.linkedin.com/in/nicol%C3%A1s-fishman-109b03182/'} className='text-lime-800 underline font-bold'>
+                    <Link prefetch target='_blank' href={'https://www.linkedin.com/in/nicol%C3%A1s-fishman-109b03182/'} className='text-lime-800 underline font-bold'>
                         Nicolás Fishman
                     </Link>
                 </h2>

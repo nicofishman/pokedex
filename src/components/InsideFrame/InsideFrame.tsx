@@ -10,10 +10,9 @@ import PokemonFrame from '../Frames/PokemonFrame';
 
 interface InsideFrameProps {
     data: Selectable;
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
+const InsideFrame: FC<InsideFrameProps> = ({data}) => {
     return (
         <div className='relative z-20 h-full'>
             {
@@ -21,10 +20,10 @@ const InsideFrame: FC<InsideFrameProps> = ({data, setQueue}) => {
                     <PresentationFrame />
                 ) : (
                     data.type === 'pokemon' ? (
-                        <PokemonFrame setQueue={setQueue} pokemon={(data.data)} />
+                        <PokemonFrame pokemon={(data.data)} />
                     ) : (
                         data.type === 'ability' && (
-                            <AbilityFrame setQueue={setQueue} ability={data.data}  />
+                            <AbilityFrame ability={data.data}  />
                         )
                     )
                 )

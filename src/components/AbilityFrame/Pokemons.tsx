@@ -1,9 +1,8 @@
 import type { FC } from 'react';
 import type { SelectablePokemon } from '../../types';
-import type { Selectable } from '../../pages';
 
-import React from 'react';
 
+import { useData } from '../../context/dataContext';
 import { FrameTitle } from '../UI/FrameTitle';
 import { PokemonOrAbilityButton } from '../UI/PokemonOrAbilityButton';
 
@@ -11,10 +10,11 @@ import { PokemonOrAbilityButton } from '../UI/PokemonOrAbilityButton';
 
 interface PokemonsProps {
     pokemons: SelectablePokemon[];
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
 }
 
-const Pokemons: FC<PokemonsProps> = ({pokemons, setQueue}) => {
+const Pokemons: FC<PokemonsProps> = ({pokemons}) => {
+    const { setQueue } = useData();
+
     return (
         <>
             <FrameTitle>Pokemons</FrameTitle>

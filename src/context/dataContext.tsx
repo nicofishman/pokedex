@@ -15,6 +15,11 @@ interface DataContextType {
     favorites: { pokemons: SelectablePokemon['id'][]; abilities: Ability['id'][];};
     addFavorite: (pokemon: Selectable) => void;
     removeFavorite: (pokemon: Selectable) => void;
+
+    queue: (Selectable)[];
+    setQueue: React.Dispatch<React.SetStateAction<(Selectable)[]>>;
+    selectedInFrame: Selectable;
+    undoQueue: () => void;
 }
 
 export const DataContext = createContext<DataContextType | null >(null);
@@ -22,6 +27,7 @@ export const DataContext = createContext<DataContextType | null >(null);
 const DataProvider: FC<PropsWithChildren> = ({ children }) => {
     const [pokemonsList, setPokemonsList] = useState<SelectablePokemon[]>([]);
     const [abilitiesList, setAbilitiesList] = useState<Ability[]>([]);
+    const [queue, setQueue] = useState<(Selectable)[]>([]);
 
     
     const defaultFav = useMemo(() => ({
@@ -55,6 +61,18 @@ const DataProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
 
+    const selectedInFrame = useMemo(() => {        
+        return queue[queue.length - 1]  || {
+            type: 'presentation',
+        } as Selectable;
+    }, [queue])
+
+    const undoQueue = () => {
+        const sliced = queue.slice(0, -1);
+
+        setQueue(sliced);
+    }
+
     useEffect(() => {
         const allFavorites = [...Object.values(favorites).flat()];        
 
@@ -84,9 +102,14 @@ const DataProvider: FC<PropsWithChildren> = ({ children }) => {
             setAbilitiesList,
             favorites,
             addFavorite,
-            removeFavorite
+            removeFavorite,
+            queue,
+            setQueue,
+            undoQueue,
+            selectedInFrame
         };
-    }, [pokemonsList, abilitiesList, favorites]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pokemonsList, abilitiesList, favorites, queue, selectedInFrame]);
 
     return (
         <DataContext.Provider value={value}>

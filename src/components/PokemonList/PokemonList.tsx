@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import type { Selectable } from '../../pages';
 import type { SelectablePokemon } from '../../types';
 
 import Image from 'next/image';
@@ -7,15 +6,16 @@ import React, { useState } from 'react';
 
 import { CONCURRENT_POKEDEX, MAX_POKEMON } from '../../utils/consts';
 import Loader from '../Loader';
+import { useData } from '../../context/dataContext';
 
 import ChangeOffsetButton from './ChangeOffsetButton';
 
 interface PokemonListProps {
-    setQueue: React.Dispatch<React.SetStateAction<Selectable[]>>;
     pokemons: SelectablePokemon[]
 }
 
-const PokemonList: FC<PokemonListProps> = ({ setQueue, pokemons }) => {
+const PokemonList: FC<PokemonListProps> = ({ pokemons }) => {
+    const {setQueue} = useData();
     const [offset, setOffset] = useState(0);
 
     const currentPokemons = pokemons?.slice(offset, offset + CONCURRENT_POKEDEX);
