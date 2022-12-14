@@ -30,7 +30,7 @@ const Favorites: NextPage<favoritesProps> = ({abilities, pokemons}) => {
                 <SiPokemon className='fill-slate-200 h-auto aspect-square md:w-16 z-30 relative'/>
             </Link>
             <FrameComponent className='flex gap-7 md:flex-row flex-col'>
-                <div className="flex-1">
+                <div className="flex-1 overflow-y-auto">
                     <FrameTitle>Pokemons</FrameTitle>
                     <div className='flex w-full flex-wrap'>
                         {
@@ -51,14 +51,21 @@ const Favorites: NextPage<favoritesProps> = ({abilities, pokemons}) => {
                     </div>
                     
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 overflow-y-auto">
                     <FrameTitle>Abilities</FrameTitle>
                     <div className='flex w-full flex-wrap'>
                         {
                             favoriteAbilities.map(ability => (
-                                <PokemonOrAbilityFavCard key={ability.id}>
-                                    <span className='text-lg font-normal capitalize'>{ability.name}</span>
-                                </PokemonOrAbilityFavCard>
+                                <Link prefetch href={'/'} onClick={() => setQueue(
+                                    q => [...q, {
+                                        type: 'ability',
+                                        data: ability
+                                    }]
+                                )} key={ability.id}>
+                                    <PokemonOrAbilityFavCard>
+                                        <span className='text-lg font-normal capitalize'>{ability.name}</span>
+                                    </PokemonOrAbilityFavCard>
+                                </Link>
                             ))
                         }
                     </div>
